@@ -121,7 +121,6 @@ HEROKU_APP_NAME: tugas-2-pbp
 ```
 (NAME)HEROKU_APP_NAME
 (VALUE)APLIKASI-SAYA
-
 ``` 
 22. Simpan variabel-variabel tersebut.
 23. Bukalah tab GitHub Actions dan jalankan kembali workflow yang gagal. 
