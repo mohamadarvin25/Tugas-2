@@ -27,8 +27,9 @@ def show_json(request):
     return HttpResponse(serializers.serialize("json", data_mywatchlist_item), content_type="application/json")
 
 
-data = MyWatchListItem.objects.filter(pk=1)
+
 
 
 def show_json_by_id(request, id):
+    data = MyWatchListItem.objects.filter(pk=1)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
