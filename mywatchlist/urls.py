@@ -2,7 +2,7 @@ from django.urls import path
 # now import the views.py file into this code
 from mywatchlist.views import show_film,show_xml,show_json,show_json_by_id
 
-app_name = 'mywatchlistt'
+app_name = 'mywatchlist'
 urlpatterns = [
     path('', show_film, name='show_film'),
     path('html/', show_film, name='show_film'),
