@@ -10,5 +10,4 @@ context = {
     'list_barang': data_catalog_item,
     'nama' : 'Mohamad Arvin Fadriasnyah',
     'id'   : '2006596996'
-
 }
