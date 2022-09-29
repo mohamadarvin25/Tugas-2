@@ -1,13 +1,12 @@
-from turtle import title
-from urllib.request import Request
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-import todolist
+import datetime
+from django.urls import reverse
 
 from todolist.forms import CreateTask
 from todolist.models import ToDoList
@@ -32,11 +31,11 @@ def show_create_task(request):
     }
     return render(request, "create-task.html", context)
 
-
+@login_required(login_url='/todolist/login/')
 def show_todolist(request):
     todolist = ToDoList.objects.all()
     context = {
-        'tasks': todolist
+        'tasks': todolist,
     }
     return render(request, "todolist.html", context)
 
@@ -61,8 +60,10 @@ def login_user(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return redirect('todolist:show_todolist')
+            login(request, user)  # melakukan login terlebih dahulu
+            response = HttpResponseRedirect(reverse("todolist:show_todolist")) # membuat response
+            response.set_cookie('last_login', str(datetime.datetime.now())) # membuat cookie last_login dan menambahkannya ke dalam response
+            return response
         else:
             messages.info(request, 'Username atau Password salah!')
     context = {}
@@ -71,4 +72,6 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('todolist:login')
+    response = HttpResponseRedirect(reverse('todolist:login'))
+    response.delete_cookie('last_login')
+    return response

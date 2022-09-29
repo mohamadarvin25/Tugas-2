@@ -24,6 +24,8 @@
 
 </table>
 
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+
 
 <button><a href="{% url 'todolist:show_create_task' %}">Tambah Task Baru</a></button>
 <button><a href="{% url 'todolist:logout' %}">Logout</a></button>
