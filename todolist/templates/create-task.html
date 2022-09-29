@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Tambah Task</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{create_task.as_table}}
+    </table>
+    <button type=submit>Kirim</button>
+    <button><a href="{% url 'todolist:login' %}">Kembali</a></button>
+</form>
+{% endblock content %}
