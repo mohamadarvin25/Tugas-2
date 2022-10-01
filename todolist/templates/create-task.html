@@ -6,7 +6,15 @@
 <form method="POST">
     {% csrf_token %}
     <table>
-        {{create_task.as_table}}
+        <tr>
+            <td>Title: </td>
+            <td>{{form.title}}</td>
+        </tr>
+                
+        <tr>
+            <td>Description: </td>
+            <td>{{form.description}}</td>
+        </tr>
     </table>
     <button type=submit>Kirim</button>
     <button><a href="{% url 'todolist:login' %}">Kembali</a></button>

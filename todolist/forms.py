@@ -4,9 +4,9 @@ from django import forms
 from todolist.models import ToDoList
 
 
-class CreateTask(forms.ModelForm):
+class CreateTaskForm(forms.ModelForm):
     class Meta:
-        model=ToDoList
-        fields = {'title','description'}
+        model = ToDoList
+        fields = {'title', 'description'}
     title = forms.CharField(max_length=255)
-    description = forms.CharField( )
+    description = forms.CharField(max_length=255)
