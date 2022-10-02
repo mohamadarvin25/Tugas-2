@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>Login</title>
+<title>Create Task</title>
 {% endblock meta %}
 
 {% block content %}
 
 <div class = "login">
 
-    <h1>Login</h1>
+    <h1>Create Task</h1>
 
     <form method="POST" action="">
         {% csrf_token %}
         <table>
             <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+                <td>Title: </td>
+                <td><input type="text" name="title" placeholder="Title"></td>
             </tr>
 
             <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
+                <td>Description: </td>
+                <td><textarea name="description" placeholder="Description" rows=4></textarea></td>
             </tr>
 
             <tr>
                 <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
+                <td><input type="submit" value="Create"></td>
             </tr>
         </table>
     </form>
@@ -37,8 +37,6 @@
             {% endfor %}
         </ul>
     {% endif %}
-
-    Belum mempunyai akun? <a href="{% url 'todolist:register' %}">Buat Akun</a>
 
 </div>
 

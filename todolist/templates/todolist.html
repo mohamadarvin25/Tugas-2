@@ -1,39 +1,33 @@
 {% extends 'base.html' %}
 
+{% block meta %}
+<title>Todo List</title>
+{% endblock meta %}
+
 {% block content %}
-<p>
-<h1>To Do List</h1>
-<h5>Account Name: </h5>
-<b>{{user}}</b>
-</p>
+<h5>Nama: {{ nama }}</h5>
 
 <table>
     <tr>
-        <th>Tanggal Pembuatan Task</th>
+        <th>Tanggal Pembuatan</th>
         <th>Judul</th>
         <th>Deskripsi</th>
         <th>Selesai?</th>
-
     </tr>
-    {% comment %} Add the data below this line {% endcomment %}
+    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
     {% for task in tasks %}
     <tr>
         <th>{{task.date}}</th>
         <th>{{task.title}}</th>
         <th>{{task.description}}</th>
-        <th>{{task.is_finished}}</th>
+        <th>{{ task.is_finished }}</th>
         <th><button><a href="{% url 'todolist:update_task' task.id %}">Selesaikan task</a></button></th>
         <th><button><a href="{% url 'todolist:hapus_task' task.id %}">Hapus task</a></button></th>
-
     </tr>
     {% endfor %}
-
 </table>
 
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-
-
-<button><a href="{% url 'todolist:show_create_task' %}">Tambah Task Baru</a></button>
+<button><a href="{% url 'todolist:create_task' %}">Create Task</a></button>
 <button><a href="{% url 'todolist:logout' %}">Logout</a></button>
 
 {% endblock content %}

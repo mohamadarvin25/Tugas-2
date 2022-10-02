@@ -1,92 +1,96 @@
-from urllib.request import Request
+import datetime
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+
+# Registrasi
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-import datetime
-from django.urls import reverse
 
-from todolist.forms import CreateTaskForm
-from todolist.models import ToDoList
+# Login
+from django.contrib.auth import authenticate, login
 
+# Logout
+from django.contrib.auth import logout
 # Create your views here.
 
+# Login required
+from django.contrib.auth.decorators import login_required
 
-def show_create_task(request):
-    form = CreateTaskForm()
-    if request.method == "POST":
-        form = CreateTaskForm(request.POST)
-        form.instance.user = request.user
-        form.instance.date = datetime.datetime.now()
-        if form.is_valid():
-            form.save()
-            return redirect('todolist:show_todolist')
-    context = {
-        'page_title': 'Task Baru',
-        'form': form,
-    }
-    return render(request, "create-task.html", context)
+# Cookies
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
+from todolist.models import ItemTodolist
 
 @login_required(login_url='/todolist/login/')
 def show_todolist(request):
-    data_todolist = ToDoList.objects.filter(user=request.user)
+    user = request.user
+    task = ItemTodolist.objects.filter(user=user)
     context = {
-    'tasks': data_todolist,
-    'nama': request.user,
-    'last_login': request.COOKIES['last_login'],
+        'nama': user.username,
+        'tasks': task
     }
     return render(request, "todolist.html", context)
 
-
+# Register
 def register(request):
-    form=UserCreationForm()
+    form = UserCreationForm()
 
     if request.method == "POST":
-        form=UserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Akun telah berhasil dibuat!')
             return redirect('todolist:login')
 
-    context={'form': form}
+    context = {'form': form}
     return render(request, 'register.html', context)
 
-
+# Login
 def login_user(request):
     if request.method == 'POST':
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        user=authenticate(request, username=username, password=password)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)  # melakukan login terlebih dahulu
-            response=HttpResponseRedirect(
-                reverse("todolist:show_todolist"))  # membuat response
-            # membuat cookie last_login dan menambahkannya ke dalam response
-            response.set_cookie('last_login', str(datetime.datetime.now()))
+            response = HttpResponseRedirect(reverse("todolist:show_todolist"))  # membuat response
+            currentDate = datetime.date.today()
+            response.set_cookie('last_login',
+                                str(currentDate.strftime("%Y-%m-%d")))  # membuat cookie last_login dan menambahkannya ke dalam response
             return response
         else:
             messages.info(request, 'Username atau Password salah!')
-    context={}
+    context = {}
     return render(request, 'login.html', context)
 
-
+# Logout
 def logout_user(request):
     logout(request)
-    response=HttpResponseRedirect(reverse('todolist:login'))
+    response = HttpResponseRedirect(reverse('todolist:login'))
     response.delete_cookie('last_login')
     return response
 
+
+def create_task(request):
+    if (request.method == "POST"):
+        title = request.POST["title"]
+        currentDate = datetime.date.today()
+        date = currentDate.strftime("%Y-%m-%d")
+        description = request.POST["description"]
+        task = ItemTodolist(user=request.user, title=title,date=date, description=description)
+        task.save()
+        return redirect('todolist:show_todolist')
+    
+    return render(request, 'create_task.html')
+
 def hapus_task(request, task_id):
-    deleted_item = ToDoList.objects.get(pk=task_id)
+    deleted_item = ItemTodolist.objects.get(pk=task_id)
     deleted_item.delete()
     return redirect('todolist:show_todolist')
 
 def update_task(request, task_id):
-    updated_task = ToDoList.objects.get(pk=task_id)
+    updated_task = ItemTodolist.objects.get(pk=task_id)
     if updated_task.is_finished:
         updated_task.is_finished = False
     else:

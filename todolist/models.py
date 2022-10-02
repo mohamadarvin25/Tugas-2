@@ -1,13 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
-# Create your models here.
-
-
-class ToDoList(models.Model):
-    title = models.CharField(max_length=255)
+class ItemTodolist(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    date = models.TextField()
+    title = models.TextField()
     description = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField()
     is_finished = models.BooleanField(default=False)
