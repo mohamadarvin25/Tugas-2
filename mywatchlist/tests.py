@@ -1,28 +1,20 @@
-from pydoc import resolve
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
-
-from mywatchlist.models import MyWatchListItem
-from mywatchlist.views import show_film, show_json, show_xml, show_json_by_id
+from mywatchlist.views import show_mywatchlist, show_xml, show_json
 
 # Create your tests here.
+class Test(TestCase):
+    def test_html(self):
+        client = Client()
+        response = client.get(reverse("mywatchlist:show_mywatchlist"))
+        self.assertEquals(response.status_code, 200)
 
+    def test_json(self):
+        client = Client()
+        response = client.get(reverse("mywatchlist:show_json"))
+        self.assertEquals(response.status_code, 200)
 
-class MyWatchlistTests(TestCase):
-
-    def test_url_exists_at_correct_location(self):
-        response = self.client.get("/")
-        self.assertEqual(response.status_code, 200)
-    
-    
-    def test_url_available_by_name_html(self):  
-        response = self.client.get(reverse('mywatchlist:show_film'))
-        self.assertEqual(response.status_code, 200)
-    
-    def test_url_available_by_name_xml(self):  
-        response = self.client.get(reverse('mywatchlist:show_xml'))
-        self.assertEqual(response.status_code, 200)
-    
-    def test_url_available_by_name_json(self):  
-        response = self.client.get(reverse('mywatchlist:show_json'))
-        self.assertEqual(response.status_code, 200)
+    def test_xml(self):
+        client = Client()
+        response = client.get(reverse("mywatchlist:show_xml"))
+        self.assertEquals(response.status_code, 200)
