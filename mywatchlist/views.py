@@ -21,7 +21,6 @@ def show_mywatchlist(request):
         pesan = "Wah, kamu masih sedikit menonton!"
     context ={
         'list_film': data_barang_mywatchlist,
-        'nama': 'Afiq Ilyasa Akmal',
         'pesan': pesan
     }
     return render(request, "mywatchlist.html", context)
