@@ -1,8 +1,8 @@
 Tautan untuk tugas ini: 
-- [mywatchlist](https://tugas2-pbp-afiq.herokuapp.com/mywatchlist)
-- [mywatchlist/html](https://tugas2-pbp-afiq.herokuapp.com/mywatchlist/html)
-- [mywatchlist/xml](https://tugas2-pbp-afiq.herokuapp.com/mywatchlist/xml)
-- [mywatchlist/json](https://tugas2-pbp-afiq.herokuapp.com/mywatchlist/json)
+- [mywatchlist](https://sleepy-crag-41411.herokuapp.com/mywatchlist)
+- [mywatchlist/html](https://sleepy-crag-41411.herokuapp.com/mywatchlist/html)
+- [mywatchlist/xml](https://sleepy-crag-41411.herokuapp.com/mywatchlist/xml)
+- [mywatchlist/json](https://sleepy-crag-41411.herokuapp.com/mywatchlist/json)
 
 ## Perbedaan antara JSON, XML, dan HTML
 - JSON (JavaScript Object Notation) adalah suatu *text format* yang *lightweight* untuk menyimpan dan *transporting* data. JSON ditulis dalam notasi object JavaScript dan bersifat *self-describing* sehingga orang yang membacanya secara intuitif dapat mengerti maksudnya. JSON dibangun dengan dasar 2 struktur, yaitu suatu koleksi dari pasangan *name/value* serta suatu *ordered list* dari *values*. 
