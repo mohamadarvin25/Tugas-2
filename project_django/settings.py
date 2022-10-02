@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-3@5wx%(^*zl68l(o$^m-3%cvjv0g&mom1ra=oj5f048_al57s7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mywatchlist',
     'todolist',
 ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -87,7 +88,6 @@ DATABASES = {
 }
 
 if PRODUCTION:
-    DEBUG = False
     DATABASES['default'] = dj_database_url.config(
         conn_max_age=600, ssl_require=True
     )
