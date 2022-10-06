@@ -6,38 +6,35 @@
 
 {% block content %}
 
-<div class = "login">
+<div class="w-100 vh-100 d-flex justify-content-center align-items-center">
+    <div class="d-inline-flex flex-column align-items-center rounded-4 bg-light p-5 mb-5 bg-white rounded">
+        <h1>Create Task</h1>
 
-    <h1>Create Task</h1>
+        <form method="POST" action="" class="d-flex flex-column">
+            {% csrf_token %}
+            <div class="d-flex flex-column mb-2">
+                <label for="create-task" class="form-label">Title</label>
+                <input class="form-control" type="text" name="title" placeholder="Enter your title here..">
+            </div>
+            <div class="d-flex flex-column mb-2">
+                <label for="create-task" class="form-label">Description</label>
+                <textarea class="form-control" name="description" placeholder="Enter your description here.."
+                    rows=4></textarea>
+            </div>
+            <div class="d-flex flex-column mb-2">
+                <input type="submit" value="Create task!">
+            </div>
+        </form>
 
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Title: </td>
-                <td><input type="text" name="title" placeholder="Title"></td>
-            </tr>
-
-            <tr>
-                <td>Description: </td>
-                <td><textarea name="description" placeholder="Description" rows=4></textarea></td>
-            </tr>
-
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Create"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
+        {% if messages %}
         <ul>
             {% for message in messages %}
-                <li>{{ message }}</li>
+            <li>{{ message }}</li>
             {% endfor %}
         </ul>
-    {% endif %}
-
+        {% endif %}
+    </div>
+</div>
 </div>
 
 {% endblock content %}

@@ -5,29 +5,59 @@
 {% endblock meta %}
 
 {% block content %}
-<h5>Nama: {{  nama }}</h5>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand">Hello, {{ nama }}</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="{% url 'todolist:create_task' %}" class="nav-item nav-link active">Create Task</a>
+                <a href="{% url 'todolist:logout' %}" class="nav-item nav-link">Logout</a>
+            </div>
+            <div class="navbar-nav ms-auto">
 
-<table>
-    <tr>
-        <th>Tanggal Pembuatan</th>
-        <th>Judul</th>
-        <th>Deskripsi</th>
-        <th>Selesai?</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for task in tasks %}
-    <tr>
-        <th>{{task.date}}</th>
-        <th>{{task.title}}</th>
-        <th>{{task.description}}</th>
-        <th>{{ task.is_finished }}</th>
-        <th><button><a href="{% url 'todolist:update_task' task.id %}">Selesaikan task</a></button></th>
-        <th><button><a href="{% url 'todolist:hapus_task' task.id %}">Hapus task</a></button></th>
-    </tr>
-    {% endfor %}
-</table>
+            </div>
+        </div>
+    </div>
+</nav>
 
-<button><a href="{% url 'todolist:create_task' %}">Create Task</a></button>
-<button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+<div class="w-100 vh-100 d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-column align-items-center rounded-4 bg-light p-5 mb-5 bg-white rounded">
 
+
+        <div class='row card-group'>
+            {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+            {% for task in tasks %}
+
+            <div class="col-4">
+                <div class="card h-100 ">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ task.title }}</h3>
+                        <p class="font-weight-bold blue-text">
+                            {{ task.description }}
+                        </p>
+                        <h6 class="card-text">
+                            <strong>
+                                {% if task.is_finished %}
+                                <small><span class="text-success">Done</span></small>
+                                {% else %}
+                                <small><span class="text-danger">In-progress</span></small>
+                                {% endif %}
+                            </strong>
+                        </h6>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Added: {{ task.date }} </small><a
+                            href="{% url 'todolist:update_task' task.id %}" class="btn btn-primary">Update Task</a>
+                        <a href="{% url 'todolist:hapus_task' task.id %}" class="btn btn-danger">Delete Task</a>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock content %}
