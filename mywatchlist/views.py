@@ -11,7 +11,7 @@ def show_mywatchlist(request):
     belumDitonton = 0
     pesan = ""
     for i in data_barang_mywatchlist:
-        if i.film_watched == True:
+        if i.film_watched ==  True:
             sudahDitonton += 1
         else:
             belumDitonton += 1
