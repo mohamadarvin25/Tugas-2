@@ -40,6 +40,5 @@ class Test(TestCase):
 kemudian menjalankan perintah untuk melakukan *unit test*.
 ## Postman
 <img src="https://i.postimg.cc/mgfSBpyp/Web-capture-8-10-2022-82957-web-postman-co.jpg">
-![HTML](<img src="https://i.postimg.cc/mgfSBpyp/Web-capture-8-10-2022-82957-web-postman-co.jpg">)
-![XML](https://ibb.co/YW18gMn)
-![JSON](https://ibb.co/Q9mvqDg)
+![](<img src="https://i.postimg.cc/mgfSBpyp/Web-capture-8-10-2022-82957-web-postman-co.jpg">)
+![](https://i.postimg.cc/x11LfrbR/Web-capture-8-10-2022-84013-web-postman-co.jpg)
