@@ -39,6 +39,6 @@ class Test(TestCase):
 ```
 kemudian menjalankan perintah untuk melakukan *unit test*.
 ## Postman
-![](https://ibb.co/StYJ2PR)
-![](https://ibb.co/YW18gMn)
-![](https://ibb.co/Q9mvqDg)
+![HTML](https://ibb.co/StYJ2PR)
+![XML](https://ibb.co/YW18gMn)
+![JSON](https://ibb.co/Q9mvqDg)
