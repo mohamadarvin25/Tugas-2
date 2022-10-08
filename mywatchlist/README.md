@@ -39,7 +39,7 @@ class Test(TestCase):
 ```
 kemudian menjalankan perintah untuk melakukan *unit test*.
 ## Postman
-<img src="https://i.postimg.cc/mgfSBpyp/Web-capture-8-10-2022-82957-web-postman-co.jpg" width="300" height="300">
+<img src="https://i.postimg.cc/mgfSBpyp/Web-capture-8-10-2022-82957-web-postman-co.jpg">
 ![HTML](https://ibb.co/StYJ2PR)
 ![XML](https://ibb.co/YW18gMn)
 ![JSON](https://ibb.co/Q9mvqDg)
