@@ -5,6 +5,7 @@
 {% endblock meta %}
 
 {% block content %}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a href="#" class="navbar-brand">Hello, {{ nama }}</a>
@@ -17,7 +18,9 @@
                 <a href="{% url 'todolist:logout' %}" class="nav-item nav-link">Logout</a>
             </div>
             <div class="navbar-nav ms-auto">
-
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Create Task (modal)
+                </button>
             </div>
         </div>
     </div>
@@ -27,37 +30,86 @@
     <div class="d-flex flex-column align-items-center rounded-4 bg-light p-5 mb-5 bg-white rounded">
 
 
-        <div class='row card-group'>
+        <div class='row card-group kontainer'>
             {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-            {% for task in tasks %}
 
-            <div class="col-4">
-                <div class="card h-100 ">
-                    <div class="card-body">
-                        <h3 class="card-title">{{ task.title }}</h3>
-                        <p class="font-weight-bold blue-text">
-                            {{ task.description }}
-                        </p>
-                        <h6 class="card-text">
-                            <strong>
-                                {% if task.is_finished %}
-                                <small><span class="text-success">Done</span></small>
-                                {% else %}
-                                <small><span class="text-danger">In-progress</span></small>
-                                {% endif %}
-                            </strong>
-                        </h6>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Added: {{ task.date }} </small><a
-                            href="{% url 'todolist:update_task' task.id %}" class="btn btn-primary">Update Task</a>
-                        <a href="{% url 'todolist:hapus_task' task.id %}" class="btn btn-danger">Delete Task</a>
-                    </div>
-                </div>
-            </div>
-
-            {% endfor %}
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="" class="d-flex flex-column">
+                    {% csrf_token %}
+                    <div class="d-flex flex-column mb-2">
+                        <label for="create-task" class="form-label">Title</label>
+                        <input class="form-control" type="text" id="title-task" name="title"
+                            placeholder="Enter your title here..">
+                    </div>
+                    <div class="d-flex flex-column mb-2">
+                        <label for="create-task" class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="desc-task"
+                            placeholder="Enter your description here.." rows=4></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="add-task-btn btn-primary" data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showTask() {
+        $.get('/todolist/json/', function (data) {
+            let content = '';
+            for (let i = 0; i < data.length; i++) {
+                let is_finished = data[i].fields.is_finished ? 'Done' : 'In progress';
+                content += `
+        <div class="col-4">
+    <div class="card h-100 ">
+      <div class="card-body">
+        <h3 class="card-title">${data[i].fields.title}</h3>
+            <p class="font-weight-bold blue-text">
+                ${data[i].fields.description}
+            </p>
+        <h6 class="card-text">
+            ${is_finished}
+        </h6>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Added: ${data[i].fields.date}  </small><a href="/todolist/update_task/${data[i].pk}" class="btn btn-primary">Update Task</a>
+      </div>
+    </div>
+  </div>
+        `;
+                $('.kontainer').html(content);
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        $.get("/todolist/json/", showTask);
+
+        $('.add-task-btn').click(function () {
+            let title = $('#title-task').val();
+            let description = $('#desc-task').val();
+            let CSRFtoken = $('input[name="csrfmiddlewaretoken"]').val();
+            $.post('/todolist/add/', {
+                title: title,
+                description: description,
+                csrfmiddlewaretoken: CSRFtoken
+            }, $.get("/todolist/json/", showTask))
+
+        })
+    })
+</script>
 {% endblock content %}

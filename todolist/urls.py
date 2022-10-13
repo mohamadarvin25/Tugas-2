@@ -17,4 +17,6 @@ urlpatterns = [
     path('create_task/', create_task, name='create_task'),
     path('hapus_task/<int:task_id>', hapus_task, name='hapus_task'),
     path('update_task/<int:task_id>', update_task, name='update_task'),
+    path('json/', show_todolist_json, name='show_todolist_json'),
+    path('add/', add_task_json, name='add_task_json'),
 ]

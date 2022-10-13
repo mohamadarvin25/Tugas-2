@@ -17,7 +17,8 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 # Cookies
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core import serializers
 from django.urls import reverse
 
 from todolist.models import ItemTodolist
@@ -97,3 +98,18 @@ def update_task(request, task_id):
         updated_task.is_finished = True
     updated_task.save()
     return redirect('todolist:show_todolist')
+
+@login_required(login_url='/todolist/login/')
+def show_todolist_json(request):
+    tasks = ItemTodolist.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', tasks), content_type='application/json')
+
+def add_task_json(request):
+    if (request.method == "POST"):
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        currentDate = datetime.date.today()
+        date = currentDate.strftime("%Y-%m-%d")
+        task = ItemTodolist.objects.create(user=request.user, date=date, title=title, description=description)
+        task.save()
+    return HttpResponse('')
